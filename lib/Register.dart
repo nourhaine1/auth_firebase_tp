@@ -37,23 +37,6 @@ class _RegisterState extends State<Register> {
               child: Column(children: [
                 const SizedBox(height: 40),
                 TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Your username',
-                  ),
-                  onChanged: (value) {
-                    setState(() {
-                      username = value;
-                    });
-                  },
-                  validator: (value) {
-                    if (value == null || value == value.isEmpty) {
-                      return "please enter a non null value !";
-                    }
-                    return null;
-                  },
-                ),
-                const SizedBox(height: 40),
-                TextFormField(
                   decoration: const InputDecoration(
                     labelText: 'Your adress',
                     hintText: 'Person@gmail.com',
@@ -123,13 +106,12 @@ class _RegisterState extends State<Register> {
         )));
   }
 
-  Future<void> register(email, password) async {
+  Future<void> signup(email, password) async {
     try {
       print(email);
       print(password);
       final credential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Connexion valide")));
     } on FirebaseAuthException catch (e) {
@@ -140,7 +122,7 @@ class _RegisterState extends State<Register> {
 
   validateRegister() {
     if (_formKey.currentState!.validate()) {
-      register(email, password);
+      signup(email, password);
     }
   }
 }
